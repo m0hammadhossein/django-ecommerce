@@ -1,0 +1,74 @@
+{% extends "store/main.html" %}
+{% load static %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="box-element" id="form-wrapper">
+                <form id="form">
+                    <div id="user-info">
+                        <div class="form-field">
+                            <input required type="text" name="name" class="form-control" placeholder="Name...">
+                        </div>
+                        <div class="form-field">
+                            <input required type="email" name="email" class="form-control" placeholder="Email...">
+                        </div>
+                    </div>
+                    <div id="shipping-info">
+                        <hr/>
+                        <p>Shipping information:</p>
+                        <hr/>
+                        <div class="form-field">
+                            <input required type="text" name="address" class="form-control" placeholder="Address...">
+                        </div>
+                        <div class="form-field">
+                            <input required type="text" name="city" class="form-control" placeholder="City...">
+                        </div>
+                        <div class="form-field">
+                            <input required type="text" name="state" class="form-control" placeholder="State...">
+                        </div>
+                        <div class="form-field">
+                            <input required type="text" name="zipcode" class="form-control" placeholder="Zip Code...">
+                        </div>
+                    </div>
+                    <hr/>
+                    <div class="box-element hidden">
+                        <small>Paypal option</small>
+
+                    </div>
+                    <br/>
+                    <input id="form-button" type="submit" class="btn btn-success form-control" value="Continue">
+                </form>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="box-element">
+                <a class="btn btn-outline-dark" href="{% url 'cart' %}">
+                    &#x2190 Back to cart
+                </a>
+                <hr/>
+                <h3>Ordering Summery</h3>
+                <hr/>
+                {% for item in items %}
+                    <div class="card-group">
+                        <div style="flex: 2;">
+                            <img src="{{ item.product.imageurl }}" alt="product" class="row-image">
+                        </div>
+                        <div style="flex: 2;">
+                            <p>{{ item.product.name }}</p>
+                        </div>
+                        <div style="flex: 1;">
+                            <p>${{ item.product.price|floatformat:2 }}</p>
+                        </div>
+                        <div style="flex: 1;">
+                            <p>{{ item.quantity }}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+                <hr/>
+                <h5>Items: {{ order.get_order_items }}</h5>
+                <h5>Total ${{ order.get_cart_total|floatformat:2 }}</h5>
+            </div>
+        </div>
+    </div>
+{% endblock %}
